@@ -1,24 +1,12 @@
-class Solution {
+class Solution { // 256 ms, faster than 42.84%
 public:
-        int dp[2501];
-        int lis(int i,vector<int>&a){
-            if(dp[i]!=-1)return dp[i];
-            int ans=1;
-            for(int j=0;j<i;j++){
-                if(a[i]>a[j]){
-                    ans=max(ans,lis(j,a)+1);
-                }
-            }
-            return dp[i]=ans;
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n, 1);
+        for (int i = 0; i < n; ++i)
+            for (int j = 0; j < i; ++j)
+                if (nums[i] > nums[j] && dp[i] < dp[j] + 1)
+                    dp[i] = dp[j] + 1;
+        return *max_element(dp.begin(), dp.end());
     }
-    
-        int lengthOfLIS(vector<int>& nums) {
-        memset(dp,-1,sizeof(dp));
-            int ans=0;
-            for(int i=0;i<nums.size();i++){
-                  ans=max(ans,lis(i,nums));
-            }
-        return ans;
-        }
-    
 };
